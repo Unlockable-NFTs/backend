@@ -3,7 +3,8 @@ const express = require('express')
 const mongoose = require('mongoose')
 const cors = require("cors")
 
-
+//> ---------- MIDDLEWARES ------------
+const { uploadFile, sendFile } = require("./middlewares/gridfs")
 
 
 //> ------- Global Variables ------------
@@ -49,6 +50,21 @@ async function main() {
     })
     res.send(nftIds)
 })
+/**
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ *
+ */
+ app.get('/image/:nftId', async (req, res, next) => {
+    const nft = await Nft.findById(req.params.nftId).exec()
+    req.imgId = nft.lowResImgId
+    next()
+}, sendFile, () => {})
 
 /**
  * 
