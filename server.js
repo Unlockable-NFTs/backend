@@ -17,6 +17,8 @@ app.use(express.urlencoded({extended: true}))
 app.use(express.json())
 app.use(cors())
 
+//> ---------- CONFIGS ----------------
+const Nft = require("./models/nft")
 
 // ---------- main() ------------------
 async function main() {
@@ -24,8 +26,29 @@ async function main() {
     mongoose.connect(MONGO_DB_URI, _ => {
         console.log(`Connected to database.`)
     })
-
 }
+
+// -------------------- ROUTES --------------------------
+/**
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ */
+ app.get("/", async (req, res) => {
+    console.log("Get Request for /")
+    const nfts = await Nft.find({}).exec()
+    const nftIds = []
+
+    nfts.forEach(nft => {
+        nftIds.push(nft._id)
+    })
+    res.send(nftIds)
+})
 
 /**
  * 
